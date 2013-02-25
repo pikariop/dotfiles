@@ -1,0 +1,34 @@
+##
+syntax "php" "\.php[2345s~]?$"
+
+## php markings
+color brightred "(<\?(php)?|\?>)"
+
+## functions
+color white "\<[a-z_]*\("
+
+## types
+color brightblue "\<(var|float|global|double|bool|char|int|enum|const)\>"
+
+## structure
+color cyan "\<(var|class|function|echo|case|break|default|exit|switch|if|else|elseif|endif|foreach|endforeach|@|while|public|private|protected|returtrue|false|null|TRUE|FALSE|NULL|const|static|extends|as|array|require|include|require_once|include_once|define|do|continue|declare|goto|print|in)\>"
+
+## Variables
+color brightyellow "\$[A-Za-z0-9_\-\>]+"
+
+##color blue "\-&gt;[a-zA-Z_0-9$]*|[=!&lt;&gt;]"
+
+## control flow
+color magenta "\<(goto|continue|break|return)\>"
+
+## strings
+#color yellow "<[^=       ]*>" ""(\.|[^"])*""
+color yellow "("([^\\"]|\\.)*"|'([^\\']|\\.)*')"
+## comments
+color green "//.*"
+color green start="/\*" end="\*/"
+#color blue start="<" end=">"
+#color red "&[^;[[:space:]]]*;"
+
+## Trailing whitespace
+##color ,green "[[:space:]]+$"
