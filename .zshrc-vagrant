@@ -30,7 +30,7 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
-alias ls='ls -alFh'
+alias ls='ls -alFh --color'
 alias nano='vim'
 
 setopt AUTO_PUSHD
