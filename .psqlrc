@@ -1,3 +1,4 @@
+# http://www.manniwood.com/postgresql_stuff/index.html
 \set PROMPT1 '%n@%m %~%R%# ' 
 \pset null '<<NULL>>'
 \pset linestyle unicode
