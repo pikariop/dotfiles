@@ -1,6 +1,6 @@
-# http://www.manniwood.com/postgresql_stuff/index.html
+-- http://www.manniwood.com/postgresql_stuff/index.html
 \set PROMPT1 '%n@%m %~%R%# ' 
-\pset null '<<NULL>>'
+\pset null '¤'
 \pset linestyle unicode
 \pset border 2
 \pset pager off
