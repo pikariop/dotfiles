@@ -4,6 +4,11 @@ filetype plugin indent on
 
 scriptencoding utf-8
 
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
 set encoding=utf-8
 set number
 set tabstop=4
