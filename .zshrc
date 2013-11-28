@@ -34,24 +34,8 @@ alias ls='ls -alFh --color'
 alias nano='vim'
 
 setopt AUTO_PUSHD
-export EDITOR=/usr/bin/vim
 
-function watcher()
-{ 
-  WATCHERTIME=$1
-  WATCHERFILE=/tmp/watcher$$
-  shift
-  while true; do
-    WATCHERHEIGHT=$(($LINES - 5))
-    ( eval $* ) | tail -n ${WATCHERHEIGHT} > ${WATCHERFILE} 2>/dev/null
-    clear
-    /bin/echo -n "Every ${WATCHERTIME} seconds - "
-    date
-    /bin/echo
-    cat ${WATCHERFILE}
-    \rm -f ${WATCHERFILE}
-    /bin/echo
-    /bin/echo "=="
-    sleep ${WATCHERTIME}
-  done
-}
+export EDITOR=/usr/bin/vim
+export LC_ALL=fi_FI.UTF-8
+export LANG=fi_FI.UTF-8
+
