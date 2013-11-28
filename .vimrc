@@ -23,3 +23,11 @@ autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
 nmap <silent> <F3> :NERDTreeToggle<CR>
+
+set backupdir=~/vimtmp//
+set undodir=~/vimtmp//
+set directory=~/vimtmp//
+
+if &diff
+    colorscheme diffscheme
+endif
