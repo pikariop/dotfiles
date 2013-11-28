@@ -10,6 +10,7 @@ noremap <Left> <NOP>
 noremap <Right> <NOP>
 
 set encoding=utf-8
+set t_Co=256
 set number
 set tabstop=4
 set shiftwidth=4
