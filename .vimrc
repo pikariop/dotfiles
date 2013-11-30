@@ -24,9 +24,9 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 
 nmap <silent> <F3> :NERDTreeToggle<CR>
 
-set backupdir=~/vimtmp//
-set undodir=~/vimtmp//
-set directory=~/vimtmp//
+set backupdir=~/.vimtmp//
+set undodir=~/.vimtmp//
+set directory=~/.vimtmp//
 
 if &diff
     colorscheme diffscheme
