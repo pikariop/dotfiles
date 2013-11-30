@@ -36,8 +36,8 @@ alias nano='vim'
 setopt AUTO_PUSHD
 
 export EDITOR=/usr/bin/vim
-export LC_ALL=fi_FI.UTF-8
-export LANG=fi_FI.UTF-8
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # http://unix.stackexchange.com/questions/52099/how-to-append-extend-zshell-completions
 zstyle -s ':completion:*:hosts' hosts _ssh_config

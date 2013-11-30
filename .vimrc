@@ -31,3 +31,7 @@ set directory=~/.vimtmp//
 if &diff
     colorscheme diffscheme
 endif
+
+set langmenu=en_US.UTF-8 " gvim menus, just in case
+language en_US.UTF-8
+
