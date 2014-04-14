@@ -18,6 +18,7 @@ set expandtab
 set list
 
 highlight MatchParen cterm=bold ctermfg=cyan ctermbg=black
+highlight Pmenu ctermbg=238 gui=bold
 
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
