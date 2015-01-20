@@ -52,6 +52,9 @@ zstyle ':completion:*:hosts' hosts $_ssh_config
 
 hash -rf
 
+# Run Ansible straight outta git
 #source ~/src/ansible/hacking/env-setup -q
 
-fortune | ponysay
+if hash fortune 2>/dev/null && hash ponysay && 2>/dev/null; then
+    fortune | ponysay
+fi
