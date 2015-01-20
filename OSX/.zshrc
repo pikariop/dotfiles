@@ -11,7 +11,7 @@ export ZSH_THEME="bira-dev"
 # CASE_SENSITIVE="true"
 
 # Comment this out to disable weekly auto-update checks
-# DISABLE_AUTO_UPDATE="true"
+DISABLE_AUTO_UPDATE="true"
 
 # Uncomment following line if you want to disable colors in ls
 # DISABLE_LS_COLORS="true"
@@ -32,26 +32,22 @@ source $ZSH/oh-my-zsh.sh
 
 alias ls='ls -alTFhG'
 alias nano='vim'
+alias gs='git status'
 
 setopt AUTO_PUSHD
-export EDITOR=/usr/bin/vim
+#setopt PrintEightBit
 
-function watcher()
-{ 
-  WATCHERTIME=$1
-  WATCHERFILE=/tmp/watcher$$
-  shift
-  while true; do
-    WATCHERHEIGHT=$(($LINES - 5))
-    ( eval $* ) | tail -n ${WATCHERHEIGHT} > ${WATCHERFILE} 2>/dev/null
-    clear
-    /bin/echo -n "Every ${WATCHERTIME} seconds - "
-    date
-    /bin/echo
-    cat ${WATCHERFILE}
-    \rm -f ${WATCHERFILE}
-    /bin/echo
-    /bin/echo "=="
-    sleep ${WATCHERTIME}
-  done
-}
+
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+export LESSCHARSET=UTF-8
+
+zstyle -s ':completion:*:hosts' hosts _ssh_config
+[[ -r ~/.ssh/config ]] && _ssh_config+=($(cat ~/.ssh/config | sed -ne 's/Host[=\t ]//p'))
+zstyle ':completion:*:hosts' hosts $_ssh_config
+
+hash -rf
+
+#source ~/src/ansible/hacking/env-setup -q
+
+fortune | ponysay
