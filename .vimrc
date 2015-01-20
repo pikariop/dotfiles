@@ -74,7 +74,11 @@ highlight Pmenu ctermbg=238 gui=bold
 autocmd vimenter * if !argc() | NERDTree | endif
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
 
+nnoremap <F2> :set invpaste paste?<CR>
+set pastetoggle=<F2>
+set showmode
 nmap <silent> <F3> :NERDTreeToggle<CR>
+nmap <silent> <F4> :set invnumber<CR>
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
 set backupdir=~/.vim/tmp//
@@ -89,3 +93,4 @@ set langmenu=en_US.UTF-8 " gvim menus, just in case
 language en_US.UTF-8
 
 au BufRead,BufNewFile Vagrantfile if &ft == '' | setfiletype ruby | endif
+au BufRead,BufNewFile ansible_hosts if &ft == '' | setfiletype ini | endif
