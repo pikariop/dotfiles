@@ -19,11 +19,22 @@ Install
 - Run
     - `homebrew.sh`
     - `karabiner.sh`
+        - Change Eject to Forward Delete (for older Macs)
+        - Change Shift-Delete to Forward Delete (newer Macs without Eject)
     - `seil.sh`
+        - Change Caps Lock to Escape (vim ftw)
 
 - Import iTerm2 settings
 
 - Symlink dotfiles
+
+- Install custom keyboard layout
+    - `sudo mv FinnishCustom.bundle /Library/Keyboard\ Layouts/`
+    - `chown -R root:wheel /Library/Keyboard\ Layouts/FinnishCustom.bundle `    - Add layout from System Preferences -> Keyboard -> Input Sources
+    - So what is customized within the layout?
+        - Dead key behavior of ~ removed, ~ is produced by pressing ¨.
+        - ^ and dead-¨ mapped to ⇧¨ and ⌥¨
+        - ´ and ` are reversed and non-dead. ⌥´ and ⇧⌥´ produce the dead key alternatives. Why reverse? Because the predefined Finnish way is opposite to U.S. layout, which I code often in, and in OS X, ⌘` cycles through windows of current app, which doesn't even work with a Finnish layout.
 
 - Using Yosemite? [Fix home phoning](https://fix-macosx.com)
 
