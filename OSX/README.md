@@ -13,6 +13,7 @@ Install
 - [NoEjectDelay](https://pqrs.org/osx/karabiner/noejectdelay.html.en) for MacBooks with optical drives
 - [iTerm2](http://iterm2.com/)
 - [Ukulele](http://scripts.sil.org/cms/scripts/page.php?site_id=nrsi&id=ukelele) - customize keyboard layouts to remap dead key behavior
+- [f.lux](https://justgetflux.com/)
 
 ## Usage
 
@@ -25,6 +26,7 @@ Install
         - Change Caps Lock to Escape (vim ftw)
 
 - Import iTerm2 settings
+    - Colors based on the awesome [Solarized](http://ethanschoonover.com/solarized) theme
 
 - Symlink dotfiles
 
