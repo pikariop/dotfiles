@@ -45,3 +45,7 @@ Install
 Check for options to bootstrap everything
 - App installation?
 - OS X configuration?
+    - function key behavior
+    - date and time preferences
+    - install from unknown sources
+    - trackpad settings
