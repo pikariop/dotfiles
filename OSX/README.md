@@ -31,8 +31,8 @@ Install
 - Symlink dotfiles
 
 - Install custom keyboard layout
-    - `sudo mv FinnishCustom.bundle /Library/Keyboard\ Layouts/`
-    - `chown -R root:wheel /Library/Keyboard\ Layouts/FinnishCustom.bundle `    - Add layout from System Preferences -> Keyboard -> Input Sources
+    - `sudo cp FinnishCustom.bundle /Library/Keyboard\ Layouts/`
+    - `sudo chown -R root:wheel /Library/Keyboard\ Layouts/FinnishCustom.bundle `    - Add layout from System Preferences -> Keyboard -> Input Sources
     - So what is customized within the layout?
         - Dead key behavior of ~ removed, ~ is produced by pressing ¨.
         - ^ and dead-¨ mapped to ⇧¨ and ⌥¨
