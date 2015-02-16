@@ -55,6 +55,6 @@ hash -rf
 # Run Ansible straight outta git
 #source ~/src/ansible/hacking/env-setup -q
 
-if hash fortune 2>/dev/null && hash ponysay && 2>/dev/null; then
+if hash fortune 2>/dev/null && hash ponysay 2>/dev/null; then
     fortune | ponysay
 fi
