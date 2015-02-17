@@ -41,5 +41,5 @@ brew install zsh
 brew install ponysay
 brew install fortune
 brew install multitail
-
+brew install ssh-copy-id
 
