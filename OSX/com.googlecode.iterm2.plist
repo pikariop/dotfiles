@@ -301,6 +301,13 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0xf702-0x3c0000</key>
+		<dict>
+			<key>Action</key>
+			<integer>33</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
 		<key>0xf703-0x320000</key>
 		<dict>
 			<key>Action</key>
@@ -312,6 +319,13 @@
 		<dict>
 			<key>Action</key>
 			<integer>0</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0xf703-0x3c0000</key>
+		<dict>
+			<key>Action</key>
+			<integer>34</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
@@ -416,7 +430,7 @@
 	<key>NSWindow Frame Preferences</key>
 	<string>317 181 924 485 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2 350 810 501 0 0 1440 877 </string>
+	<string>2 328 810 523 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -972,7 +986,7 @@
 			<key>Normal Font</key>
 			<string>Menlo-Regular 16</string>
 			<key>Option Key Sends</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
 			<integer>0</integer>
 			<key>Right Option Key Sends</key>
