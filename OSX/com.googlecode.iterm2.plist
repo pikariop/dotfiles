@@ -256,7 +256,7 @@
 	<key>FocusFollowsMouse</key>
 	<false/>
 	<key>FsTabDelay</key>
-	<real>1</real>
+	<real>0.10000000149011612</real>
 	<key>GlobalKeyMap</key>
 	<dict>
 		<key>0x48-0x120000</key>
@@ -383,7 +383,7 @@
 	<key>HideScrollbar</key>
 	<true/>
 	<key>HideTab</key>
-	<true/>
+	<false/>
 	<key>HighlightTabLabels</key>
 	<true/>
 	<key>HotKeyBookmark</key>
@@ -428,9 +428,11 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>929 110 445 384 0 0 1440 900 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>317 181 924 485 0 0 1440 877 </string>
+	<string>317 192 924 485 0 0 1440 900 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>2 328 810 523 0 0 1440 877 </string>
+	<string>2 344 810 501 0 0 1440 877 </string>
+	<key>NSWindow Frame iTerm Window 1</key>
+	<string>204 376 810 501 0 0 1440 877 </string>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -606,7 +608,7 @@
 			<key>Blink Allowed</key>
 			<false/>
 			<key>Blinking Cursor</key>
-			<false/>
+			<true/>
 			<key>Blur</key>
 			<false/>
 			<key>Blur Radius</key>
@@ -996,7 +998,7 @@
 			<key>Screen</key>
 			<integer>-1</integer>
 			<key>Scrollback Lines</key>
-			<integer>1000</integer>
+			<integer>0</integer>
 			<key>Scrollback With Status Bar</key>
 			<false/>
 			<key>Scrollback in Alternate Screen</key>
@@ -1140,7 +1142,7 @@
 			<key>Triggers</key>
 			<array/>
 			<key>Unlimited Scrollback</key>
-			<false/>
+			<true/>
 			<key>Use Bold Font</key>
 			<true/>
 			<key>Use Bright Bold</key>
@@ -1230,6 +1232,8 @@
 	<true/>
 	<key>ShowBookmarkName</key>
 	<false/>
+	<key>ShowFullScreenTabBar</key>
+	<true/>
 	<key>ShowPaneTitles</key>
 	<false/>
 	<key>SmartPlacement</key>
