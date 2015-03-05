@@ -420,6 +420,23 @@
 	<string></string>
 	<key>NSScrollAnimationEnabled</key>
 	<false/>
+	<key>NSTableView Columns KeyBingingTable</key>
+	<array>
+		<data>
+		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
+		hAErATCG
+		</data>
+		<string>198</string>
+		<data>
+		BAtzdHJlYW10eXBlZIHoA4QBQISEhAhOU1N0cmluZwGEhAhOU09iamVjdACF
+		hAErATGG
+		</data>
+		<string>287</string>
+	</array>
+	<key>NSTableView Hidden Columns KeyBingingTable</key>
+	<array/>
+	<key>NSTableView Sort Ordering KeyBingingTable</key>
+	<array/>
 	<key>NSToolbar Configuration com.apple.NSColorPanel</key>
 	<dict>
 		<key>TB Is Shown</key>
@@ -428,11 +445,15 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>929 110 445 384 0 0 1440 900 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>317 192 924 485 0 0 1440 900 </string>
+	<string>317 181 924 485 0 0 1440 877 </string>
+	<key>NSWindow Frame UKCrashReporter</key>
+	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>0 69 1440 808 0 0 1440 877 </string>
+	<string>8 267 890 573 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>204 376 810 501 0 0 1440 877 </string>
+	<string>1516 193 967 1336 1440 118 2560 1417 </string>
+	<key>NeverWarnAboutShortLivedSessions_BAE86047-EAF9-434D-84A0-95E8945F0C20</key>
+	<true/>
 	<key>New Bookmarks</key>
 	<array>
 		<dict>
@@ -463,11 +484,11 @@
 			<key>Ansi 10 Color</key>
 			<dict>
 				<key>Blue Component</key>
-				<real>0.028474019840359688</real>
+				<real>0.059105448424816132</real>
 				<key>Green Component</key>
-				<real>0.38298487663269043</real>
+				<real>0.79141020774841309</real>
 				<key>Red Component</key>
-				<real>0.012612033635377884</real>
+				<real>0.024127239361405373</real>
 			</dict>
 			<key>Ansi 11 Color</key>
 			<dict>
@@ -982,11 +1003,11 @@
 			<key>Name</key>
 			<string>Default</string>
 			<key>Non Ascii Font</key>
-			<string>Menlo-Regular 16</string>
+			<string>Menlo-Regular 18</string>
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>Menlo-Regular 16</string>
+			<string>Menlo-Regular 18</string>
 			<key>Option Key Sends</key>
 			<integer>2</integer>
 			<key>Prompt Before Closing 2</key>
@@ -1225,7 +1246,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-02-17T09:56:20Z</date>
+	<date>2015-02-27T18:20:12Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -1252,6 +1273,8 @@
 	<integer>10</integer>
 	<key>TripleClickSelectsFullWrappedLines</key>
 	<false/>
+	<key>UKCrashReporterLastCrashReportDate</key>
+	<real>1425061248</real>
 	<key>URLHandlersByGuid</key>
 	<dict/>
 	<key>UseBorder</key>
@@ -1271,6 +1294,6 @@
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
 	<key>iTerm Version</key>
-	<string>2.0</string>
+	<string>2.0.0.20141103</string>
 </dict>
 </plist>
