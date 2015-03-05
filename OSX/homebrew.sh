@@ -44,3 +44,4 @@ brew install fortune
 brew install multitail
 brew install ssh-copy-id
 brew install htop
+brew install gpg
