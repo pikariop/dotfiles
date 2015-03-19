@@ -24,6 +24,8 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-sensible'
 
+Plugin 'jistr/vim-nerdtree-tabs'
+
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
 " Git plugin not hosted on GitHub
@@ -71,13 +73,10 @@ set list
 highlight MatchParen cterm=bold ctermfg=cyan ctermbg=black
 highlight Pmenu ctermbg=238 gui=bold
 
-autocmd vimenter * if !argc() | NERDTree | endif
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
-nmap <silent> <F3> :NERDTreeToggle<CR>
+nmap <silent> <F3> :NERDTreeTabsToggle<CR>
 nmap <silent> <F4> :set invnumber<CR>
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
 
@@ -94,3 +93,13 @@ language en_US.UTF-8
 
 au BufRead,BufNewFile Vagrantfile if &ft == '' | setfiletype ruby | endif
 au BufRead,BufNewFile ansible_hosts if &ft == '' | setfiletype ini | endif
+
+let g:nerdtree_tabs_open_on_console_startup=1
+
+nnoremap <C-S-tab> :tabprevious<CR>
+nnoremap <C-tab>   :tabnext<CR>
+nnoremap <C-t>     :tabnew<CR>
+inoremap <C-S-tab> <Esc>:tabprevious<CR>i
+inoremap <C-tab>   <Esc>:tabnext<CR>i
+inoremap <C-t>     <Esc>:tabnew<CR>
+
