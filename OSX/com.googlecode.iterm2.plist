@@ -301,6 +301,13 @@
 			<key>Text</key>
 			<string></string>
 		</dict>
+		<key>0xf702-0x3a0000</key>
+		<dict>
+			<key>Action</key>
+			<integer>15</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
 		<key>0xf702-0x3c0000</key>
 		<dict>
 			<key>Action</key>
@@ -319,6 +326,13 @@
 		<dict>
 			<key>Action</key>
 			<integer>0</integer>
+			<key>Text</key>
+			<string></string>
+		</dict>
+		<key>0xf703-0x3a0000</key>
+		<dict>
+			<key>Action</key>
+			<integer>14</integer>
 			<key>Text</key>
 			<string></string>
 		</dict>
@@ -445,13 +459,13 @@
 	<key>NSWindow Frame NSFontPanel</key>
 	<string>929 110 445 384 0 0 1440 900 </string>
 	<key>NSWindow Frame Preferences</key>
-	<string>317 181 924 485 0 0 1440 877 </string>
+	<string>2445 397 924 485 1440 -33 2560 1417 </string>
 	<key>NSWindow Frame UKCrashReporter</key>
 	<string>99 293 592 584 0 0 1440 877 </string>
 	<key>NSWindow Frame iTerm Window 0</key>
-	<string>8 267 890 573 0 0 1440 877 </string>
+	<string>1468 -33 659 678 1440 -33 2560 1417 </string>
 	<key>NSWindow Frame iTerm Window 1</key>
-	<string>1516 193 967 1336 1440 118 2560 1417 </string>
+	<string>2810 163 1033 1182 1440 -33 2560 1417 </string>
 	<key>NeverWarnAboutShortLivedSessions_BAE86047-EAF9-434D-84A0-95E8945F0C20</key>
 	<true/>
 	<key>New Bookmarks</key>
@@ -1246,7 +1260,7 @@
 	<key>SUHasLaunchedBefore</key>
 	<true/>
 	<key>SULastCheckTime</key>
-	<date>2015-02-27T18:20:12Z</date>
+	<date>2015-03-23T08:27:38Z</date>
 	<key>SavePasteHistory</key>
 	<false/>
 	<key>Secure Input</key>
@@ -1262,9 +1276,9 @@
 	<key>SplitPaneDimmingAmount</key>
 	<real>0.40000000596046448</real>
 	<key>SwitchTabModifier</key>
-	<integer>4</integer>
-	<key>SwitchWindowModifier</key>
 	<integer>6</integer>
+	<key>SwitchWindowModifier</key>
+	<integer>4</integer>
 	<key>TabViewType</key>
 	<integer>0</integer>
 	<key>ThreeFingerEmulates</key>
@@ -1293,6 +1307,10 @@
 	<integer>0</integer>
 	<key>WordCharacters</key>
 	<string>/-+\~_.</string>
+	<key>findIgnoreCase_iTerm</key>
+	<true/>
+	<key>findRegex_iTerm</key>
+	<false/>
 	<key>iTerm Version</key>
 	<string>2.0.0.20141103</string>
 </dict>
