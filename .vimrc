@@ -23,8 +23,8 @@ Plugin 'tpope/vim-surround'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-sensible'
-
 Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'terryma/vim-smooth-scroll'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -53,7 +53,14 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-syntax on
+syntax enable
+set background=dark
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+colorscheme solarized
+highlight LineNr ctermbg=none
+
+
 
 scriptencoding utf-8
 
@@ -69,6 +76,7 @@ set tabstop=4
 set shiftwidth=4
 set expandtab
 set list
+set mouse=a
 
 highlight MatchParen cterm=bold ctermfg=cyan ctermbg=black
 highlight Pmenu ctermbg=238 gui=bold
@@ -103,3 +111,7 @@ inoremap <C-S-tab> <Esc>:tabprevious<CR>i
 inoremap <C-tab>   <Esc>:tabnext<CR>i
 inoremap <C-t>     <Esc>:tabnew<CR>
 
+noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 8, 2)<CR>
+noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 8, 2)<CR>
+noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 8, 4)<CR>
+noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 8, 4)<CR>
