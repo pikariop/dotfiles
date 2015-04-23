@@ -25,6 +25,7 @@ Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-sensible'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'terryma/vim-smooth-scroll'
+Plugin 'airblade/vim-gitgutter'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -84,9 +85,10 @@ highlight Pmenu ctermbg=238 gui=bold
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
-nmap <silent> <F3> :NERDTreeTabsToggle<CR>
-nmap <silent> <F4> :set invnumber<CR>
+nnoremap <silent> <F3> :NERDTreeTabsToggle<CR>
+nnoremap <silent> <F4> :set invnumber<CR>
 nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <F6> :GitGutterToggle<CR>
 
 set backupdir=~/.vim/tmp//
 set undodir=~/.vim/tmp//
