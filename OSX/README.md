@@ -36,7 +36,7 @@ Install
     - So what is customized within the layout?
         - Dead key behavior of `~` removed, `~` is produced by pressing `¨`.
         - `^` and dead-`¨` mapped to `⇧¨` and `⌥¨`
-        - `´` and ``` `` are reversed and non-dead. `⌥´` and `⇧⌥´` produce the dead key alternatives. Why reverse? Because the predefined Finnish way is opposite to U.S. layout, which I code often in, and in OS X, `⌘\`` cycles through windows of current app, which wouldn't work with a Finnish layout.
+        - `´` and ``` `` are reversed and non-dead. `⌥´` and `⇧⌥´` produce the dead key alternatives. Why reverse? Because the predefined Finnish way is opposite to U.S. layout, which I code often in, and in OS X, ``⌘\` `` cycles through windows of current app, which wouldn't work with a Finnish layout.
 
 - Using Yosemite? [Fix home phoning](https://fix-macosx.com)
 
