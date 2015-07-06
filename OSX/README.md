@@ -1,5 +1,6 @@
 # OS X specific settings
 
+
 ## Prerequisites
 
 Install
@@ -42,6 +43,8 @@ Install
 - Using Yosemite? [Fix home phoning](https://fix-macosx.com)
 
 ## Todo
+
+Start using [Fink](http://www.finkproject.org/) instead of Homebrew
 
 Check for options to bootstrap everything
 - App installation?
