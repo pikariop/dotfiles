@@ -44,7 +44,7 @@ Install
 
 ## Todo
 
-Start using [Fink](http://www.finkproject.org/) instead of Homebrew
+Start using [Fink](http://www.finkproject.org/) and/or [Nix](https://nixos.org/nix/) instead of Homebrew
 
 Check for options to bootstrap everything
 - App installation?
