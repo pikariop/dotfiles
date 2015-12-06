@@ -10,6 +10,8 @@ Vim plugin checklist:
     - `vim +PluginInstall +qall`
     - `mkdir ~/.vim/tmp`
 
+Other stuff
+- https://github.com/seebi/dircolors-solarized
 
 ## todo
 moar bootstarp

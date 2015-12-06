@@ -30,6 +30,11 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+# Source custom ls colors if present
+if [ -e ~/.dircolors ]; then
+    source ~/.dircolors 2> /dev/null
+fi
+
 alias ls='ls -alFh --color'
 alias nano='vim'
 
