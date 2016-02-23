@@ -1,2 +1,2 @@
 # https://github.com/seebi/dircolors-solarized/blob/master/README.md#general-instructions
-eval `dircolors ~/src/dircolors-solarized/dircolors.ansi-dark`
+eval `gdircolors ~/src/dircolors-solarized/dircolors.ansi-dark`
