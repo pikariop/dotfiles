@@ -33,6 +33,7 @@ source $ZSH/oh-my-zsh.sh
 alias ls='ls -alTFhG'
 alias nano='vim'
 alias gs='git status'
+alias dockenv='eval "$(docker-machine env default)"'
 
 # https://gist.github.com/quickshiftin/9130153
 # Short of learning how to actually configure OSX, here's a hacky way to use
