@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 [dirname]"
+    echo "Remove [dirname] and attempt to 'git clone' it again."
+    exit
+fi
+
+if [ ! -d $1 ]; then
+    echo "Error: not a dir: `pwd`/$1"
+    exit 1
+fi
+
+pushd $1 1> /dev/null
+
+repo_url=`git config --get remote.origin.url`
+
+popd 1> /dev/null
+
+if [ $? -ne 0 ]; then
+    echo "Error: Not a git repository: `$pwd`/$1"
+    exit 2
+fi
+
+sudo /bin/rm -rf $1
+
+if [ $? -eq 0 ]; then
+    $(git clone $repo_url $1)
+fi
+
+exit $?
