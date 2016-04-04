@@ -30,6 +30,10 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+for func in src/dotfiles/functions/*; do
+    source $func;
+done
+
 alias ls='ls -alTFhG'
 alias nano='vim'
 alias gs='git status'

@@ -30,6 +30,10 @@ source $ZSH/oh-my-zsh.sh
 
 # Customize to your needs...
 
+for func in src/dotfiles/functions/*; do
+    source $func;
+done
+
 # Source custom ls colors if present
 if [ -e ~/.dircolors ]; then
     source ~/.dircolors 2> /dev/null
