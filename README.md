@@ -15,3 +15,4 @@ Other stuff
 
 ## todo
 moar bootstarp
+moar inheritance
