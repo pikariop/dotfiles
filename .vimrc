@@ -25,6 +25,9 @@ Plugin 'tpope/vim-sensible'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'terryma/vim-smooth-scroll'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'kien/rainbow_parentheses.vim'
+Plugin 'tpope/vim-fireplace'
+Plugin 'vim-airline/vim-airline'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -103,7 +106,13 @@ language en_US.UTF-8
 au BufRead,BufNewFile Vagrantfile if &ft == '' | setfiletype ruby | endif
 au BufRead,BufNewFile ansible_hosts if &ft == '' | setfiletype ini | endif
 
+au VimEnter *.clj RainbowParenthesesToggle
+au Syntax *.clj RainbowParenthesesLoadRound
+au Syntax *.clj RainbowParenthesesLoadSquare
+au Syntax *.clj RainbowParenthesesLoadBrace
+
 let g:nerdtree_tabs_open_on_console_startup=1
+let g:airline_powerline_fonts = 1
 
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
