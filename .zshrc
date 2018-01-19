@@ -47,6 +47,8 @@ setopt AUTO_PUSHD
 export EDITOR=/usr/bin/vim
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+export PATH=$PATH:~/bin
+export FT2_SUBPIXEL_HINTING=1
 
 # http://unix.stackexchange.com/questions/52099/how-to-append-extend-zshell-completions
 zstyle -s ':completion:*:hosts' hosts _ssh_config
@@ -54,4 +56,5 @@ zstyle -s ':completion:*:hosts' hosts _ssh_config
 zstyle ':completion:*:hosts' hosts $_ssh_config
 
 hash -rf
+
 
