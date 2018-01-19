@@ -19,7 +19,6 @@ Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
-Plugin 'altercation/vim-colors-solarized'
 Plugin 'ervandew/supertab'
 Plugin 'tpope/vim-sensible'
 Plugin 'jistr/vim-nerdtree-tabs'
@@ -60,7 +59,6 @@ syntax enable
 set background=dark
 let g:solarized_termtrans=1
 let g:solarized_termcolors=256
-colorscheme solarized
 highlight LineNr ctermbg=none
 
 
@@ -113,6 +111,7 @@ au Syntax *.clj RainbowParenthesesLoadBrace
 
 let g:nerdtree_tabs_open_on_console_startup=1
 let g:airline_powerline_fonts = 1
+let g:molokai_original = 1
 
 nnoremap <C-S-tab> :tabprevious<CR>
 nnoremap <C-tab>   :tabnext<CR>
