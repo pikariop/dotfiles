@@ -1,1 +1,2 @@
-xmodmap ~/.xmodmaprc
+setxkbmap -layout fi,us
+setxkbmap -option 'grp:alt_space_toggle'
