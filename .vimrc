@@ -61,14 +61,7 @@ let g:solarized_termtrans=1
 let g:solarized_termcolors=256
 highlight LineNr ctermbg=none
 
-
-
 scriptencoding utf-8
-
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
 
 set encoding=utf-8
 set t_Co=256
