@@ -55,13 +55,17 @@ filetype plugin indent on    " required
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
 
-syntax enable
-set background=dark
-highlight LineNr ctermbg=none
-
 language en_US.UTF-8
 scriptencoding utf-8
 
+syntax enable
+highlight LineNr ctermbg=none
+highlight MatchParen cterm=bold ctermfg=cyan ctermbg=black
+highlight Pmenu ctermbg=238 gui=bold
+highlight TabLineFill term=bold cterm=bold ctermbg=darkgrey
+highlight VertSplit cterm=none
+
+set background=dark
 set encoding=utf-8
 set t_Co=256
 set number
@@ -71,15 +75,15 @@ set expandtab
 set list
 set mouse=a
 
-highlight MatchParen cterm=bold ctermfg=cyan ctermbg=black
-highlight Pmenu ctermbg=238 gui=bold
-
+nnoremap <SPACE> <Nop>
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
 set backupdir=~/.vim/tmp//
 set undodir=~/.vim/tmp//
 set directory=~/.vim/tmp//
+
+let mapleader="\<space>"
 
 if &diff
     colorscheme diffscheme
@@ -111,3 +115,4 @@ noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 8, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 8, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 8, 4)<CR>
 
+nmap <leader>d <Plug>FireplaceDtabjump
