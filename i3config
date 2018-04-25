@@ -138,11 +138,11 @@ bindsym Shift+Escape mode "default"; exec killall i3-nagbar
 # session management
 set $mode_system System (l) lock, (e) logout, (h) hibernate, (r) reboot, (Shift+s) shutdown
 mode "$mode_system" {
-    bindsym l exec i3lock && systemctl suspend; mode "default"
-    bindsym h exec i3lock && systemctl hibernate; mode "default"
+    bindsym l exec i3lock -c 222222 && systemctl suspend; mode "default"
+    bindsym h exec i3lock -c 222222 && systemctl hibernate; mode "default"
     bindsym e exec i3msg exit; mode "default"
-    bindsym Shift+s exec i3lock && sudo systemctl poweroff; mode "default"
-    bindsym r exec i3lock && sudo systemctl reboot; mode "default"
+    bindsym Shift+s exec i3lock -c 222222 && sudo systemctl poweroff; mode "default"
+    bindsym r exec i3lock -c 222222 && sudo systemctl reboot; mode "default"
     # back to normal: Enter or Escape
     bindsym Return mode "default"
     bindsym Escape mode "default"
