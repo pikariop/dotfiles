@@ -57,10 +57,9 @@ filetype plugin indent on    " required
 
 syntax enable
 set background=dark
-let g:solarized_termtrans=1
-let g:solarized_termcolors=256
 highlight LineNr ctermbg=none
 
+language en_US.UTF-8
 scriptencoding utf-8
 
 set encoding=utf-8
@@ -78,11 +77,6 @@ highlight Pmenu ctermbg=238 gui=bold
 nnoremap <F2> :set invpaste paste?<CR>
 set pastetoggle=<F2>
 set showmode
-nnoremap <silent> <F3> :NERDTreeTabsToggle<CR>
-nnoremap <silent> <F4> :set invnumber<CR>
-nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
-nnoremap <silent> <F6> :GitGutterToggle<CR>
-
 set backupdir=~/.vim/tmp//
 set undodir=~/.vim/tmp//
 set directory=~/.vim/tmp//
@@ -91,29 +85,29 @@ if &diff
     colorscheme diffscheme
 endif
 
-set langmenu=en_US.UTF-8 " gvim menus, just in case
-language en_US.UTF-8
-
-au BufRead,BufNewFile Vagrantfile if &ft == '' | setfiletype ruby | endif
-au BufRead,BufNewFile ansible_hosts if &ft == '' | setfiletype ini | endif
+let g:solarized_termtrans=1
+let g:solarized_termcolors=256
+let g:nerdtree_tabs_open_on_console_startup=1
+let g:airline_powerline_fonts = 1
+let g:molokai_original = 1
 
 au VimEnter *.clj RainbowParenthesesToggle
 au Syntax *.clj RainbowParenthesesLoadRound
 au Syntax *.clj RainbowParenthesesLoadSquare
 au Syntax *.clj RainbowParenthesesLoadBrace
 
-let g:nerdtree_tabs_open_on_console_startup=1
-let g:airline_powerline_fonts = 1
-let g:molokai_original = 1
+nnoremap <C-S-Tab> :tabprevious<CR>
+nnoremap <C-Tab>   :tabnext<CR>
+inoremap <C-S-Tab> <Esc>:tabprevious<CR>i
+inoremap <C-Tab>   <Esc>:tabnext<CR>i
 
-nnoremap <C-S-tab> :tabprevious<CR>
-nnoremap <C-tab>   :tabnext<CR>
-nnoremap <C-t>     :tabnew<CR>
-inoremap <C-S-tab> <Esc>:tabprevious<CR>i
-inoremap <C-tab>   <Esc>:tabnext<CR>i
-inoremap <C-t>     <Esc>:tabnew<CR>
+nnoremap <silent> <F3> :NERDTreeTabsToggle<CR>
+nnoremap <silent> <F4> :set invnumber<CR>
+nnoremap <silent> <F5> :let _s=@/<Bar>:%s/\s\+$//e<Bar>:let @/=_s<Bar>:nohl<CR>
+nnoremap <silent> <F6> :GitGutterToggle<CR>
 
 noremap <silent> <c-u> :call smooth_scroll#up(&scroll, 8, 2)<CR>
 noremap <silent> <c-d> :call smooth_scroll#down(&scroll, 8, 2)<CR>
 noremap <silent> <c-b> :call smooth_scroll#up(&scroll*2, 8, 4)<CR>
 noremap <silent> <c-f> :call smooth_scroll#down(&scroll*2, 8, 4)<CR>
+
