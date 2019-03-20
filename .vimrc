@@ -27,6 +27,8 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'kien/rainbow_parentheses.vim'
 Plugin 'tpope/vim-fireplace'
 Plugin 'vim-airline/vim-airline'
+Plugin 'mkitt/tabline.vim'
+Plugin 'vim-scripts/vim-auto-save'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -62,8 +64,10 @@ syntax enable
 highlight LineNr ctermbg=none
 highlight MatchParen cterm=bold ctermfg=cyan ctermbg=black
 highlight Pmenu ctermbg=238 gui=bold
-highlight TabLineFill term=bold cterm=bold ctermbg=darkgrey
 highlight VertSplit cterm=none
+highlight TabLineSel ctermfg=white ctermbg=darkblue cterm=none
+highlight TabLineFill term=bold cterm=bold ctermbg=darkgrey
+
 
 set background=dark
 set encoding=utf-8
@@ -94,16 +98,17 @@ let g:solarized_termcolors=256
 let g:nerdtree_tabs_open_on_console_startup=1
 let g:airline_powerline_fonts = 1
 let g:molokai_original = 1
+let NERDTreeShowHidden=1
 
 au VimEnter *.clj RainbowParenthesesToggle
 au Syntax *.clj RainbowParenthesesLoadRound
 au Syntax *.clj RainbowParenthesesLoadSquare
 au Syntax *.clj RainbowParenthesesLoadBrace
 
-nnoremap <C-S-Tab> :tabprevious<CR>
-nnoremap <C-Tab>   :tabnext<CR>
-inoremap <C-S-Tab> <Esc>:tabprevious<CR>i
-inoremap <C-Tab>   <Esc>:tabnext<CR>i
+nnoremap <C-h> :tabprevious<CR>
+nnoremap <C-l>   :tabnext<CR>
+inoremap <C-h> <Esc>:tabprevious<CR>i
+inoremap <C-l>   <Esc>:tabnext<CR>i
 
 nnoremap <silent> <F3> :NERDTreeTabsToggle<CR>
 nnoremap <silent> <F4> :set invnumber<CR>
