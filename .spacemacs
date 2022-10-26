@@ -32,7 +32,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(clojure
+   '(;clojure
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
@@ -41,21 +41,85 @@ This function should only modify configuration layer settings."
      auto-completion
      ;; better-defaults
      emacs-lisp
-     ;; git
+     (clojure :variables
+              clojure-backend 'lsp
+              clojure-enable-linters 'clj-kondo
+              clojure-enable-clj-refactor t
+              ;; clojure-indent-style 'align-arguments
+              ;; clojure-align-forms-automatically t
+              )
+     colors
+     (git :variables
+           git-magit-status-fullscreen t
+           magit-diff-refine-hunk t
+           git-enable-magit-todos-plugin t)
+     ;; github
      helm
-     lsp
-     markdown
-     multiple-cursors
+     (lsp :variables
+          ;; Formatting and indentation - use Cider instead
+          lsp-enable-on-type-formatting t
+          ;; Set to nil to use CIDER features instead of LSP UI
+          lsp-enable-indentation t
+          lsp-enable-snippet t  ;; to test again
+
+          ;; symbol highlighting - `lsp-toggle-symbol-highlight` toggles highlighting
+          ;; subtle highlighting for doom-gruvbox-light theme defined in dotspacemacs/user-config
+          lsp-enable-symbol-highlighting t
+
+          ;; Show lint error indicator in the mode line
+          lsp-modeline-diagnostics-enable t
+          ;; lsp-modeline-diagnostics-scope :workspace
+
+          ;; popup documentation boxes
+          ;; lsp-ui-doc-enable nil          ;; disable all doc popups
+          ;;lsp-ui-doc-show-with-cursor nil   ;; doc popup for cursor
+          ;; lsp-ui-doc-show-with-mouse t   ;; doc popup for mouse
+          lsp-ui-doc-delay 1             ;; delay in seconds for popup to display
+          lsp-ui-doc-include-signature t    ;; include function signature
+          ;; lsp-ui-doc-position 'at-point  ;; positioning of doc popup: top bottom at-point
+          lsp-ui-doc-alignment 'window      ;; relative location of doc popup: frame window
+
+          ;; code actions and diagnostics text as right-hand side of buffer
+          lsp-ui-sideline-enable t
+          lsp-ui-sideline-show-code-actions nil
+          lsp-ui-sideline-delay 1
+
+          ;; lsp-ui-sideline-show-diagnostics nil
+
+          ;; reference count for functions (assume their maybe other lenses in future)
+          lsp-lens-enable t
+
+          ;; Efficient use of space in treemacs-lsp display
+          ;;treemacs-space-between-root-nodes nil
+
+          ;; Optimization for large files
+          ;;lsp-file-watch-threshold 10000
+          ;;lsp-log-io nil
+
+          xclipboard
+          )
+     (markdown :variables
+               markdown-live-preview-engine 'vmd)
+     ;;multiple-cursors
      ;; org
      ;; (shell :variables
      ;;        shell-default-height 30
      ;;        shell-default-position 'bottom)
      ;; spell-checking
-     ;; syntax-checking
-     ;; version-control
-     '(clojure :variables
-               clojure-enable-linters 'clj-kondo)
-     treemacs)
+     syntax-checking
+     tabs
+     (treemacs :variables
+               treemacs-indentation 1
+               treemacs-use-filewatch-mode t
+               treemacs-use-follow-mode t)
+     tabs
+     theming
+     (version-control :variables
+                      version-control-diff-tool 'diff-hl
+                      version-control-global-margin t
+                      version-control-diff-side 'left)
+
+     )
 
 
    ;; List of additional packages that will be installed without being wrapped
@@ -306,7 +370,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil then the last auto saved layouts are resumed automatically upon
    ;; start. (default nil)
-   dotspacemacs-auto-resume-layouts nil
+   dotspacemacs-auto-resume-layouts t
 
    ;; If non-nil, auto-generate layout name when creating new layouts. Only has
    ;; effect when using the "jump to layout by number" commands. (default nil)
@@ -355,7 +419,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil the frame is fullscreen when Emacs starts up. (default nil)
    ;; (Emacs 24.4+ only)
-   dotspacemacs-fullscreen-at-startup nil
+   dotspacemacs-fullscreen-at-startup t
 
    ;; If non-nil `spacemacs/toggle-fullscreen' will not use native fullscreen.
    ;; Use to disable fullscreen animations in OSX. (default nil)
@@ -374,7 +438,7 @@ It should only modify the values of Spacemacs settings."
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's active or selected.
    ;; Transparency can be toggled through `toggle-transparency'. (default 90)
-   dotspacemacs-active-transparency 90
+   dotspacemacs-active-transparency 100
 
    ;; A value from the range (0..100), in increasing opacity, which describes
    ;; the transparency level of a frame when it's inactive or deselected.
@@ -498,7 +562,7 @@ It should only modify the values of Spacemacs settings."
    ;; `trailing' to delete only the whitespace at end of lines, `changed' to
    ;; delete only whitespace for changed lines or `nil' to disable cleanup.
    ;; (default nil)
-   dotspacemacs-whitespace-cleanup nil
+   dotspacemacs-whitespace-cleanup changed
 
    ;; If non-nil activate `clean-aindent-mode' which tries to correct
    ;; virtual indentation of simple modes. This can interfere with mode specific
@@ -565,6 +629,11 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (setq nrepl-sync-request-timeout 240)
+  (setq lsp-ui-doc-text-scale-level 1)
+  (setq backup-directory-alist '(("" . "~/.emacs.d/backup")))
+  (with-eval-after-load 'lsp-mode
+    (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 )
 
 
@@ -580,8 +649,9 @@ This function is called at the very end of Spacemacs initialization."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(evil-want-Y-yank-to-eol nil)
  '(package-selected-packages
-   '(helm-cider cider-eval-sexp-fu cider sesman parseedn clojure-mode parseclj ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-line macrostep lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
+   '(helm-lsp lsp-origami origami lsp-treemacs lsp-ui lsp-mode color-identifiers-mode diff-hl rainbow-identifiers rainbow-mode vmd-mode clj-refactor inflections multiple-cursors flycheck-clj-kondo forge yaml ghub closql emacsql-sqlite emacsql treepy git-link git-messenger git-modes git-timemachine gitignore-templates helm-git-grep helm-ls-git magit-todos smeargle treemacs-magit magit magit-section git-commit with-editor transient compat browse-at-remote centaur-tabs git-gutter-fringe fringe-helper git-gutter helm-cider cider-eval-sexp-fu cider sesman parseedn clojure-mode parseclj ws-butler writeroom-mode winum which-key volatile-highlights vi-tilde-fringe uuidgen use-package undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons restart-emacs request rainbow-delimiters quickrun popwin pcre2el password-generator paradox overseer org-superstar open-junk-file nameless multi-line macrostep lorem-ipsum link-hint inspector info+ indent-guide hybrid-mode hungry-delete hl-todo highlight-parentheses highlight-numbers highlight-indentation hide-comnt helm-xref helm-themes helm-swoop helm-purpose helm-projectile helm-org helm-mode-manager helm-make helm-flx helm-descbinds helm-ag google-translate golden-ratio font-lock+ flycheck-package flycheck-elsa flx-ido fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired evil-tutor evil-textobj-line evil-terminal-cursor-changer evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection evil-cleverparens evil-args evil-anzu eval-sexp-fu emr elisp-slime-nav elisp-def editorconfig dumb-jump drag-stuff dotenv-mode dired-quick-sort diminish devdocs define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol auto-compile aggressive-indent ace-link ace-jump-helm-line)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
