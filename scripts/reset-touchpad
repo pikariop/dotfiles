@@ -1,0 +1,9 @@
+#!/bin/bash
+synclient TouchpadOff=1
+synclient TouchpadOff=0
+synclient VertEdgeScroll=0
+synclient PalmDetect=1
+synclient FingerHigh=50
+synclient FingerLow=40
+synclient HorizHysteresis=50
+synclient VertHysteresis=50
