@@ -29,6 +29,7 @@ Plugin 'tpope/vim-fireplace'
 Plugin 'vim-airline/vim-airline'
 Plugin 'mkitt/tabline.vim'
 Plugin 'vim-scripts/vim-auto-save'
+Plugin 'ryanoasis/vim-devicons'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'

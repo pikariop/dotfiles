@@ -1,8 +1,6 @@
 # dotfiles
 
-Some dotfiles, app configs and other customization I use within my boxen.
-
-Most stuff cherry-picked from various sources, so not claiming any credit for anything.
+Personal dotfiles
 
 Vim plugin checklist:
 - https://github.com/gmarik/Vundle.vim
@@ -12,7 +10,4 @@ Vim plugin checklist:
 
 Other stuff
 - https://github.com/seebi/dircolors-solarized
-
-## todo
-moar bootstarp
-moar inheritance
+- https://www.nerdfonts.com/
