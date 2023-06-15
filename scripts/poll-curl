@@ -1,0 +1,10 @@
+#vi: ft=bash
+#!/bin/bash
+
+while true
+do
+    date=$(date '+%Y-%m-%d %H:%M:%S')
+    curl=$(curl --location --silent --output /dev/null --connect-timeout 1.0 --write-out '%{method} %{url} %{http_code} %{errormsg}\n' $1)
+    echo "$date $curl"
+    sleep 120
+done
