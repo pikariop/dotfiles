@@ -8,7 +8,7 @@ call vundle#begin()
 "call vundle#begin('~/some/path/here')
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " The following are examples of different formats supported.
 " Keep Plugin commands between vundle#begin/end.
@@ -29,6 +29,7 @@ Plugin 'vim-airline/vim-airline'
 Plugin 'mkitt/tabline.vim'
 Plugin 'vim-scripts/vim-auto-save'
 Plugin 'ryanoasis/vim-devicons'
+Plugin 'tpope/vim-markdown'
 
 " plugin from http://vim-scripts.org/vim/scripts.html
 "Plugin 'L9'
@@ -103,6 +104,7 @@ let g:solarized_termcolors=256
 let g:airline_powerline_fonts = 1
 let g:molokai_original = 1
 let NERDTreeShowHidden=1
+let g:markdown_fenced_languages = ['sh', 'bash', 'css', 'javascript', 'js=javascript', 'json=javascript', 'xml', 'clojure', 'python', 'typescript', 'ts=typescript']
 
 au VimEnter *.clj RainbowParenthesesToggle
 au Syntax *.clj RainbowParenthesesLoadRound
