@@ -1,0 +1,15 @@
+#!/bin/bash
+
+IFS_prev=$IFS;
+ IFS=$'\n';
+AZ_URL=$(az devops configure --list | awk '/^organization/{print $3}')
+for project in $(az devops project list --query "value[].name" --output tsv) ;
+do
+  for REPO in $(az repos list --project "$project" --output tsv --query "[].name | [? "'!'"contains(@, 'LEGACY')]" );
+  do
+    az repos pr list --project "$project" --repository "$REPO" --status "active" --query "[?"'!'"isDraft]"  \
+     | jq --arg azurl $AZ_URL \
+       '.[] | {title, description, creationDate, project: .repository.project.name, repository: .repository.name, sourceRefName, codeReviewId} | . += {uri: ($azurl + @uri "\(.project)/_git/\(.repository)/pullrequest/\(.codeReviewId)")}'
+  done;
+done;
+IFS=$IFS_prev
