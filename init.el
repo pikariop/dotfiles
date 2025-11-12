@@ -9,11 +9,14 @@
     clojure-mode-extra-font-locking
     centaur-tabs
     company
+    dracula-theme
+    evil
     flycheck
     flycheck-clj-kondo
     git-gutter
     git-gutter-fringe
     git-link
+    goto-chg
     helm
     helm-projectile
     lsp-mode
@@ -24,6 +27,7 @@
     smooth-scrolling
     treemacs
     treemacs-projectile
+    undo-fu
     rainbow-delimiters
     rainbow-mode
     which-key))
@@ -39,6 +43,19 @@
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (global-display-line-numbers-mode 1)
+
+(use-package undo-fu
+  :config
+  (global-unset-key (kbd "C-z"))
+  (global-set-key (kbd "C-z")   'undo-fu-only-undo)
+  (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+
+;(setq evil-toggle-key "C-<Home>")
+(use-package evil
+  :init
+  (setq evil-undo-system 'undo-fu))
+(evil-mode 1)
+;(defcustom evil-toggle-key "C-M-e"
 
 
 (add-hook 'clojure-mode-hook 'lsp)
