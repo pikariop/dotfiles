@@ -22,6 +22,7 @@
     lsp-mode
     lsp-treemacs
     markdown-mode
+    paredit
     projectile
     projectile-ripgrep
     smooth-scrolling
