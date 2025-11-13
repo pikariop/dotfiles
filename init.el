@@ -25,6 +25,8 @@
     paredit
     projectile
     projectile-ripgrep
+    smartparens
+    evil-smartparens
     smooth-scrolling
     treemacs
     treemacs-projectile
@@ -37,6 +39,7 @@
   (package-refresh-contents)
   (mapc #'package-install package-selected-packages))
 
+
 (load-theme 'dracula t)
 (add-to-list 'default-frame-alist
              '(font . "Hack Nerd Font Mono-18"))
@@ -44,12 +47,19 @@
 (toggle-scroll-bar -1)
 (tool-bar-mode -1)
 (global-display-line-numbers-mode 1)
+(setq mac-option-key-is-meta t)
+(setq mac-right-option-modifier nil)
+
 
 (use-package undo-fu
   :config
   (global-unset-key (kbd "C-z"))
   (global-set-key (kbd "C-z")   'undo-fu-only-undo)
   (global-set-key (kbd "C-S-z") 'undo-fu-only-redo))
+
+(setq undo-limit 67108864) ; 64mb.
+(setq undo-strong-limit 100663296) ; 96mb.
+(setq undo-outer-limit 1006632960) ; 960mb.
 
 ;(setq evil-toggle-key "C-<Home>")
 (use-package evil
@@ -65,14 +75,45 @@
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (with-eval-after-load 'lsp-mode
 (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+;; https://emacs-lsp.github.io/lsp-mode/tutorials/clojure-guide/
+(setq gc-cons-threshold (* 100 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      company-minimum-prefix-length 1)
+					; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
+					; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+(setq lsp-keymap-prefix "C-c l")
 
 
 (custom-set-variables
  '(cider-repl-print-length 1000000)
  '(cider-interactive-eval-output-destination (quote repl-buffer)))
 
-(setq mac-option-key-is-meta t)
-(setq mac-right-option-modifier nil)
+(add-hook 'cider-mode-hook
+          (lambda ()
+            (global-set-key (kbd "s-'")'cider-switch-to-repl-buffer)
+            (define-key cider-mode-map (kbd "C-c TAB") 'cider-format-defun)
+            (define-key cider-mode-map (kbd "<C-tab>") 'cider-format-defun)))
+
+(add-hook 'cider-repl-mode-hook
+          (lambda ()
+            (cider-enable-cider-completion-style)
+            (define-key cider-repl-mode-map (kbd "s-'") 'cider-switch-to-last-clojure-buffer)
+            (define-key cider-repl-mode-map (kbd "C-:") 'clojure-toggle-keyword-string)
+            (define-key cider-repl-mode-map (kbd "<S-return>") 'cider-repl-newline-and-indent)))
+
+
+(use-package smartparens
+  :ensure smartparens  ;; install the package
+  :hook (prog-mode clojure-mode clojurescript-mode emacs-lisp-mode) ;; add `smartparens-mode` to these hooks
+  :config
+  ;; load default config
+  (require 'smartparens-config))
+
+(add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
+(show-smartparens-global-mode t)
+(add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
+
 
 (use-package git-gutter
   :hook (prog-mode . git-gutter-mode)
@@ -92,20 +133,11 @@
   )
 
 
-;; https://emacs-lsp.github.io/lsp-mode/tutorials/clojure-guide/
-(setq gc-cons-threshold (* 100 1024 1024)
-      read-process-output-max (* 1024 1024)
-      treemacs-space-between-root-nodes nil
-      company-minimum-prefix-length 1
-      ; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
-      ; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
-      )
-
-
 (use-package which-key
   :ensure t
   :config
   (which-key-mode +1))
+
 
 (use-package projectile
   :ensure t
@@ -119,6 +151,7 @@
 
 (with-eval-after-load 'treemacs
   (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
+
 
 (use-package centaur-tabs
   :demand
