@@ -29,6 +29,7 @@
     evil-smartparens
     smooth-scrolling
     treemacs
+    treemacs-evil
     treemacs-projectile
     undo-fu
     rainbow-delimiters
@@ -43,13 +44,16 @@
 (load-theme 'dracula t)
 (add-to-list 'default-frame-alist
              '(font . "Hack Nerd Font Mono-18"))
-(menu-bar-mode -1)
-(toggle-scroll-bar -1)
-(tool-bar-mode -1)
 (global-display-line-numbers-mode 1)
+(setq backup-directory-alist "~/.emacs.d/backup")
 (setq mac-option-key-is-meta t)
 (setq mac-right-option-modifier nil)
+(setq ns-function-modifier 'hyper)
+(setq mac-function-modifier 'hyper)
 
+(when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
+(when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
+(when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
 (use-package undo-fu
   :config
@@ -67,6 +71,7 @@
   (setq evil-undo-system 'undo-fu))
 (evil-mode 1)
 ;(defcustom evil-toggle-key "C-M-e"
+(evil-add-command-properties #'lsp-find-definition :jump t)
 
 
 (add-hook 'clojure-mode-hook 'lsp)
@@ -82,7 +87,11 @@
       company-minimum-prefix-length 1)
 					; lsp-enable-indentation nil ; uncomment to use cider indentation instead of lsp
 					; lsp-enable-completion-at-point nil ; uncomment to use cider completion instead of lsp
+(setq clojure-indent-style 'align-arguments)
+(setq clojure-indent-keyword-style 'align-arguments)
+(setq clojure-align-forms-automatically nil)
 (setq lsp-keymap-prefix "C-c l")
+(setq lsp-keymap-prefix "H-l")
 
 
 (custom-set-variables
@@ -108,11 +117,39 @@
   :hook (prog-mode clojure-mode clojurescript-mode emacs-lisp-mode) ;; add `smartparens-mode` to these hooks
   :config
   ;; load default config
-  (require 'smartparens-config))
+  (require 'smartparens-config)
+  (setq evil-move-beyond-eol t))
 
 (add-hook 'prog-mode-hook 'turn-on-smartparens-strict-mode)
 (show-smartparens-global-mode t)
 (add-hook 'smartparens-enabled-hook #'evil-smartparens-mode)
+(setq sp-navigate-interactive-always-progress-point t) 
+
+(define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-forward-slurp-sexp)
+(define-key smartparens-mode-map (kbd "C-S-<left>") 'sp-backward-slurp-sexp)
+;(define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-slurp-hybrid-sexp)
+(define-key smartparens-mode-map (kbd "C-M-<right>") 'sp-forward-barf-sexp)
+(define-key smartparens-mode-map (kbd "C-M-<left>") 'sp-backward-barf-sexp)
+(define-key smartparens-mode-map (kbd "C-t") 'sp-transpose-sexp)
+;(define-key smartparens-mode-map (kbd "C-T") 'sp-transpose-hybrid-sexp)
+(define-key smartparens-mode-map (kbd "C-M-t") (lambda () (interactive) (sp-transpose-sexp -1)))
+(define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-sexp)
+(define-key smartparens-mode-map (kbd "C-<left>") 'sp-backward-sexp)
+(define-key smartparens-mode-map (kbd "M-<down>") 'sp-up-sexp)
+(define-key smartparens-mode-map (kbd "M-<up>") 'sp-backward-up-sexp)
+(define-key smartparens-mode-map (kbd "M-<left>") 'sp-backward-symbol)
+(define-key smartparens-mode-map (kbd "M-<right>") 'sp-forward-symbol)
+(define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
+(define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
+(define-key smartparens-mode-map (kbd "C-M-c") 'sp-copy-sexp)
+(define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
+(define-key smartparens-mode-map (kbd "C-M-<up>") 'sp-raise-sexp)
+(define-key smartparens-mode-map (kbd "C-M-<down>") 'sp-unwrap-sexp)
+(define-key smartparens-mode-map (kbd "C-M-s") 'sp-split-sexp)
+(define-key smartparens-mode-map (kbd "C-M-j") 'sp-join-sexp)
+(define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-delete-word)
+(define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
+(define-key smartparens-mode-map (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
 
 
 (use-package git-gutter
@@ -124,7 +161,11 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
+(custom-set-variables
+ '(git-gutter:ask-p nil))
 
+(global-unset-key (kbd "s-g"))
+(global-set-key (kbd "s-g <backspace>") 'git-gutter:revert-hunk)
 
 (unless (display-graphic-p)
   (xterm-mouse-mode 1)
@@ -137,6 +178,7 @@
   :ensure t
   :config
   (which-key-mode +1))
+(setq which-key-idle-delay 0.4)
 
 
 (use-package projectile
@@ -161,3 +203,8 @@
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
 
+
+(use-package super-save
+  :ensure t
+  :config
+  (super-save-mode +1))
