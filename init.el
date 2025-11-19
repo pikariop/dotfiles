@@ -19,9 +19,11 @@
     goto-chg
     helm
     helm-projectile
+    kaocha-runner
     lsp-mode
     lsp-treemacs
     markdown-mode
+    pandoc-mode
     paredit
     projectile
     projectile-ripgrep
@@ -208,3 +210,7 @@
   :ensure t
   :config
   (super-save-mode +1))
+
+(add-hook 'markdown-mode-hook 'pandoc-mode)
+(add-hook 'pandoc-mode-hook 'pandoc-load-default-settings)
+
