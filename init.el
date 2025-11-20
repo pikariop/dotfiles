@@ -57,6 +57,10 @@
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
 
+
+(keymap-global-set "s-<mouse-1>" 'browse-url-at-mouse)
+(keymap-global-set "M-s-x" 'helm-M-x)
+
 (use-package undo-fu
   :config
   (global-unset-key (kbd "C-z"))
@@ -81,7 +85,7 @@
 (add-hook 'clojurescript-mode-hook 'lsp)
 (add-hook 'clojure-mode-hook 'rainbow-delimiters-mode)
 (with-eval-after-load 'lsp-mode
-(add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/clojure-guide/
 (setq gc-cons-threshold (* 100 1024 1024)
       read-process-output-max (* 1024 1024)
@@ -132,9 +136,9 @@
 ;(define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-slurp-hybrid-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<right>") 'sp-forward-barf-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<left>") 'sp-backward-barf-sexp)
-(define-key smartparens-mode-map (kbd "C-t") 'sp-transpose-sexp)
+(define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
 ;(define-key smartparens-mode-map (kbd "C-T") 'sp-transpose-hybrid-sexp)
-(define-key smartparens-mode-map (kbd "C-M-t") (lambda () (interactive) (sp-transpose-sexp -1)))
+;(define-key smartparens-mode-map (kbd "C-M-t") (lambda () (interactive) (sp-transpose-sexp -1)))
 (define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-sexp)
 (define-key smartparens-mode-map (kbd "C-<left>") 'sp-backward-sexp)
 (define-key smartparens-mode-map (kbd "M-<down>") 'sp-up-sexp)
@@ -168,6 +172,8 @@
 
 (global-unset-key (kbd "s-g"))
 (global-set-key (kbd "s-g <backspace>") 'git-gutter:revert-hunk)
+(global-set-key (kbd "s-g <up>") 'git-gutter:previous-hunk)
+(global-set-key (kbd "s-g <down>") 'git-gutter:next-hunk)
 
 (unless (display-graphic-p)
   (xterm-mouse-mode 1)
