@@ -135,12 +135,17 @@
 (add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 
 (custom-set-variables
- '(cider-repl-print-length 1000000)
- '(cider-interactive-eval-output-destination (quote repl-buffer))
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(cider-interactive-eval-output-destination 'repl-buffer)
  '(cider-lein-parameters "with-profile +dev repl :headless")
- '(cider-stacktrace-default-filters (quote (java tooling dup)))
+ '(cider-repl-print-length 1000000)
+ '(cider-stacktrace-default-filters '(java tooling dup))
  '(cider-use-overlays t)
- )
+ '(git-gutter:ask-p nil)
+ '(helm-M-x-reverse-history nil))
 (setq cider-known-endpoints
       '(("host-a" "localhost" "12345")
 	))
@@ -216,8 +221,7 @@
   (define-fringe-bitmap 'git-gutter-fr:added [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:modified [224] nil nil '(center repeated))
   (define-fringe-bitmap 'git-gutter-fr:deleted [128 192 224 240] nil nil 'bottom))
-(custom-set-variables
- '(git-gutter:ask-p nil))
+
 
 (global-unset-key (kbd "s-g"))
 (global-set-key (kbd "s-g <backspace>") 'git-gutter:revert-hunk)
@@ -259,6 +263,10 @@
   :demand
   :config
   (centaur-tabs-mode t)
+  :custom
+  (centaur-tabs-set-icons nil)
+  (centaur-tabs-show-new-tab-button nil)
+  (centaur-tabs-set-close-button nil)
   :bind
   ("C-<prior>" . centaur-tabs-backward)
   ("C-<next>" . centaur-tabs-forward))
@@ -308,3 +316,9 @@
   :hook
   (prog-mode . ws-butler-mode)
   (emacs-lisp-mode . ws-butler-mode))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
