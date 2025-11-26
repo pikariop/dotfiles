@@ -1,9 +1,12 @@
+;; -*- lexical-binding: t -*-
 (require 'package)
+(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
 (package-initialize)
 
 (setq package-selected-packages
-  '(cider
+  '(aggressive-indent
+    cider
     cider-eval-sexp-fu
     clj-refactor
     clojure-mode
@@ -60,6 +63,28 @@
 (setq ns-function-modifier 'hyper)
 (setq mac-function-modifier 'hyper)
 (setq comment-column 0)
+(setq truncate-string-ellipsis "…")
+(setq-default indent-tabs-mode nil)
+(delete-selection-mode t)
+(column-number-mode)
+(glyphless-display-mode)
+;(whitespace-mode)
+;(progn
+;  ;; Make whitespace-mode with very basic background coloring for whitespaces.
+;  ;; http://xahlee.info/emacs/emacs/whitespace-mode.html
+;  (setq whitespace-style (quote (tabs tab-mark)))
+;
+;  ;; Make whitespace-mode and whitespace-newline-mode use “¶” for end of line char and “▷” for tab.
+;  (setq whitespace-display-mappings
+;        ;; all numbers are unicode codepoint in decimal
+;        '(
+;          ;; 32 is SPACE, 183 is MIDDLE DOT ·
+;          (space-mark 32 [183])
+;          ;; 10 is LINE FEED, 182 isPILCROW SIGN ¶
+;          (newline-mark 10 [182 10])
+;          ;; 9 is tab, 182 isPILCROW SIGN ¶
+;          (tab-mark 9 [9655 9])
+;          )))
 
 ;; https://emacs.stackexchange.com/a/62615
 (setq help-window-select t)
@@ -131,8 +156,13 @@
 (setq clojure-align-forms-automatically nil)
 (setq lsp-keymap-prefix "C-c l")
 (setq lsp-keymap-prefix "H-l")
-(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
-(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
+
+(use-package aggressive-indent
+  :ensure aggressive-indent
+  :hook (prog-mode clojure-mode emacs-lisp-mode))
+
+;(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
+;(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -313,12 +343,19 @@
 
 (use-package ws-butler
   :ensure t
+  :custom
+  (require-final-newline t)
   :hook
   (prog-mode . ws-butler-mode)
   (emacs-lisp-mode . ws-butler-mode))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
+;; Sources
+; https://blog.sumtypeofway.com/posts/emacs-config.html
