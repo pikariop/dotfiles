@@ -306,4 +306,5 @@
 (use-package ws-butler
   :ensure t
   :hook
-   (prog-mode . ws-butler-mode))
+  (prog-mode . ws-butler-mode)
+  (emacs-lisp-mode . ws-butler-mode))
