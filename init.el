@@ -5,7 +5,8 @@
 (package-initialize)
 
 (setq package-selected-packages
-  '(aggressive-indent
+  '(;aggressive-indent
+    blamer
     cider
     cider-eval-sexp-fu
     clj-refactor
@@ -26,11 +27,13 @@
     goto-chg
     helm
     helm-projectile
+    helm-cider
  ;   highlight-parentheses
     hydra
     kaocha-runner
     lsp-mode
     lsp-treemacs
+    magit
     markdown-mode
     pandoc-mode
     paredit
@@ -68,6 +71,8 @@
 (delete-selection-mode t)
 (column-number-mode)
 (glyphless-display-mode)
+(setq ns-pop-up-frames nil)
+
 ;(whitespace-mode)
 ;(progn
 ;  ;; Make whitespace-mode with very basic background coloring for whitespaces.
@@ -100,6 +105,8 @@
 
 (keymap-global-set "s-<mouse-1>" 'browse-url-at-mouse)
 (keymap-global-set "M-<tab>" 'other-window)
+(keymap-global-set "s-w" 'kill-buffer)
+(keymap-global-set "s-q" 'delete-window)
 
 (setq mouse-drag-copy-region nil)
 
@@ -123,15 +130,25 @@
 (setq undo-strong-limit 100663296) ; 96mb.
 (setq undo-outer-limit 1006632960) ; 960mb.
 
-;(setq evil-toggle-key "C-<Home>")
+
+(setq evil-toggle-key "s-<home>")
 (use-package evil
-  :init
-  (setq evil-undo-system 'undo-fu)
+  :init (setq evil-undo-system 'undo-fu)
+  :hook (prog-mode clojure-mode clojurescript-mode emacs-lisp-mode)
   :config
-  (setq evil-move-beyond-eol t))
-(evil-mode 1)
-;(defcustom evil-toggle-key "C-M-e"
-(evil-add-command-properties #'lsp-find-definition :jump t)
+  (setq evil-move-beyond-eol t)
+  (evil-add-command-properties #'lsp-find-definition :jump t))
+
+(dolist (mode '(cider-popup-buffer-mode
+                cider-inspector-mode
+                cider-stacktrace-mode
+                flycheck-error-list-mode))
+  (evil-set-initial-state mode 'emacs))
+
+(setq evil-insert-state-cursor '(bar "green")
+      evil-normal-state-cursor '(box "medium sea green")
+      evil-visual-state-cursor '(hollow "orange")
+      evil-emacs-state-cursor '(box "white"))
 
 
 (require 'clojure-mode-extra-font-locking)
@@ -157,9 +174,9 @@
 (setq lsp-keymap-prefix "C-c l")
 (setq lsp-keymap-prefix "H-l")
 
-(use-package aggressive-indent
-  :ensure aggressive-indent
-  :hook (prog-mode clojure-mode emacs-lisp-mode))
+;(use-package aggressive-indent
+;  :ensure aggressive-indent
+;  :hook (prog-mode clojure-mode emacs-lisp-mode))
 
 ;(add-hook 'emacs-lisp-mode-hook #'aggressive-indent-mode)
 ;(add-hook 'clojure-mode-hook #'aggressive-indent-mode)
@@ -173,9 +190,12 @@
  '(cider-lein-parameters "with-profile +dev repl :headless")
  '(cider-repl-print-length 1000000)
  '(cider-stacktrace-default-filters '(java tooling dup))
+ '(cider-stacktrace-fill-column nil)
  '(cider-use-overlays t)
  '(git-gutter:ask-p nil)
  '(helm-M-x-reverse-history nil))
+
+
 (setq cider-known-endpoints
       '(("host-a" "localhost" "12345")
 	))
@@ -194,11 +214,8 @@
             (define-key cider-repl-mode-map (kbd "C-:") 'clojure-toggle-keyword-string)
             (define-key cider-repl-mode-map (kbd "<S-return>") 'cider-repl-newline-and-indent)))
 
-(defun my-evil-local-disable ()
-  (evil-local-mode 0))
-
-;(add-hook 'cider-popup-buffer-quit-function 'my-evil-local-disable)
-;(add-hook 'cider-popup-buffer-quit-function 'my-evil-local-disable)
+;(add-hook 'cider-popup-buffer-mode #'turn-off-evil-mode nil)
+;(add-hook 'cider-stacktrace-mode #'turn-off-evil-mode nil)
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
@@ -240,6 +257,7 @@
 (define-key smartparens-mode-map (kbd "M-<delete>") 'sp-delete-word)
 (define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
 (define-key smartparens-mode-map (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
+(define-key smartparens-mode-map (kbd "C-<tab>") 'sp-indent-defun)
 
 
 (use-package git-gutter
@@ -257,6 +275,7 @@
 (global-set-key (kbd "s-g <backspace>") 'git-gutter:revert-hunk)
 (global-set-key (kbd "s-g <up>") 'git-gutter:previous-hunk)
 (global-set-key (kbd "s-g <down>") 'git-gutter:next-hunk)
+(global-set-key (kbd "s-g l") 'git-link)
 
 
 (use-package which-key
@@ -306,6 +325,7 @@
   :ensure t
   :config
   (super-save-mode +1))
+(setq auto-save-default nil)
 
 
 (add-hook 'markdown-mode-hook 'pandoc-mode)
@@ -356,6 +376,27 @@
  ;; If there is more than one, they won't work right.
  )
 
+(use-package blamer
+  :ensure t
+  :bind (("s-i" . blamer-show-posframe-commit-info)
+         ("s-g b" . blamer-mode))
+  :defer 20
+  :custom
+  (blamer-view 'overlay-right)
+  (blamer-idle-time 0.3)
+  (blamer-min-offset 70)
+  (blamer-prettify-time-p nil)
+  (blamer-author-formatter "✎ %s ")
+  (blamer-datetime-formatter "[%s]")
+  (blamer-commit-formatter " ● %s")
+  :custom-face
+  (blamer-face ((t :foreground "#7a88cf"
+                    :background nil
+                    :height 140
+                    :italic t)))
+  ;:config
+  ;(global-blamer-mode 1)
+  )
 
 ;; Sources
 ; https://blog.sumtypeofway.com/posts/emacs-config.html
