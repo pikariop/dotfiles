@@ -33,6 +33,7 @@
     kaocha-runner
     lsp-mode
     lsp-treemacs
+    lsp-ui
     magit
     markdown-mode
     pandoc-mode
