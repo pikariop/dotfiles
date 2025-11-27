@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while read LINE; do
+  VARNAME=$(grep -o "^[A-Z_]*" <<< $LINE)
+  if [[ ! -z "$VARNAME" ]] ;
+  then
+    grep --exclude .env* -I -ro $VARNAME . > /dev/null \
+      && echo $VARNAME
+  fi
+done < "${1:-/dev/stdin}"
