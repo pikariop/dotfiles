@@ -1,7 +1,7 @@
 ;; -*- lexical-binding: t -*-
 (require 'package)
-(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(add-to-list 'package-archives '("gnu"   . "https://elpa.gnu.org/packages/"))
 (package-initialize)
 
 (setq package-selected-packages
@@ -73,6 +73,13 @@
 (column-number-mode)
 (glyphless-display-mode)
 (setq ns-pop-up-frames nil)
+(setq use-short-answers t)
+(setq ring-bell-function 'ignore)
+(setq require-final-newline t)
+(set-charset-priority 'unicode)
+(prefer-coding-system 'utf-8-unix)
+(setq create-lockfiles nil)
+(global-hl-line-mode +1)
 
 ;(whitespace-mode)
 ;(progn
@@ -103,11 +110,16 @@
   (xterm-mouse-mode 1)
   (global-set-key (kbd "<wheel-down>") 'scroll-down-line)
   (global-set-key (kbd "<wheel-up>") 'scroll-up-line))
-
 (keymap-global-set "s-<mouse-1>" 'browse-url-at-mouse)
 (keymap-global-set "M-<tab>" 'other-window)
+(keymap-global-set "M-S-<tab>" (lambda ()
+                                 (interactive)
+                                 (other-window -1)))
 (keymap-global-set "s-w" 'kill-buffer)
 (keymap-global-set "s-q" 'delete-window)
+(keymap-global-set "<f3>" 'treemacs)
+(keymap-global-set "<f4>" 'display-line-numbers-mode)
+(keymap-global-set "<f5>" 'visual-line-mode)
 
 (setq mouse-drag-copy-region nil)
 
@@ -137,19 +149,17 @@
   :init (setq evil-undo-system 'undo-fu)
   :hook (prog-mode clojure-mode clojurescript-mode emacs-lisp-mode)
   :config
-  (setq evil-move-beyond-eol t)
+  (setq evil-insert-state-cursor '(bar "green")
+        evil-move-beyond-eol t
+        evil-normal-state-cursor '(box "medium sea green")
+        evil-visual-state-cursor '(hollow "orange")
+        evil-emacs-state-cursor '(box "white")
+        evil-cross-lines t)
+
   (evil-add-command-properties #'lsp-find-definition :jump t))
 
-(dolist (mode '(cider-popup-buffer-mode
-                cider-inspector-mode
-                cider-stacktrace-mode
-                flycheck-error-list-mode))
-  (evil-set-initial-state mode 'emacs))
-
-(setq evil-insert-state-cursor '(bar "green")
-      evil-normal-state-cursor '(box "medium sea green")
-      evil-visual-state-cursor '(hollow "orange")
-      evil-emacs-state-cursor '(box "white"))
+;(dolist (mode '(emacs-lisp-mode))
+;  (evil-set-initial-state mode 'evil))
 
 
 (require 'clojure-mode-extra-font-locking)
@@ -161,6 +171,9 @@
 
 (with-eval-after-load 'lsp-mode
   (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration))
+;(global-unset-key (kbd "s-l"))
+;(setq lsp-keymap-prefix "s-l")
+;(setq lsp-keymap-prefix "H-l")
 
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/clojure-guide/
 (setq gc-cons-threshold (* 100 1024 1024)
@@ -172,8 +185,6 @@
 (setq clojure-indent-style 'align-arguments)
 (setq clojure-indent-keyword-style 'align-arguments)
 (setq clojure-align-forms-automatically nil)
-(setq lsp-keymap-prefix "C-c l")
-(setq lsp-keymap-prefix "H-l")
 
 ;(use-package aggressive-indent
 ;  :ensure aggressive-indent
@@ -194,12 +205,14 @@
  '(cider-stacktrace-fill-column nil)
  '(cider-use-overlays t)
  '(git-gutter:ask-p nil)
- '(helm-M-x-reverse-history nil))
+ '(helm-M-x-reverse-history nil)
+ '(lsp-ui-peek-list-width 80)
+ '(lsp-ui-peek-peek-height 120))
 
 
 (setq cider-known-endpoints
-      '(("host-a" "localhost" "12345")
-	))
+      '(("dev" "localhost" "12345")
+        ("test" "localhost" "54321")))
 
 (add-hook 'cider-mode-hook
           (lambda ()
@@ -215,8 +228,6 @@
             (define-key cider-repl-mode-map (kbd "C-:") 'clojure-toggle-keyword-string)
             (define-key cider-repl-mode-map (kbd "<S-return>") 'cider-repl-newline-and-indent)))
 
-;(add-hook 'cider-popup-buffer-mode #'turn-off-evil-mode nil)
-;(add-hook 'cider-stacktrace-mode #'turn-off-evil-mode nil)
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
@@ -232,30 +243,35 @@
 
 (define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-forward-slurp-sexp)
 (define-key smartparens-mode-map (kbd "C-S-<left>") 'sp-backward-slurp-sexp)
-;(define-key smartparens-mode-map (kbd "C-S-<right>") 'sp-slurp-hybrid-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<right>") 'sp-forward-barf-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<left>") 'sp-backward-barf-sexp)
 (define-key smartparens-mode-map (kbd "C-M-t") 'sp-transpose-sexp)
-;(define-key smartparens-mode-map (kbd "C-T") 'sp-transpose-hybrid-sexp)
-;(define-key smartparens-mode-map (kbd "C-M-t") (lambda () (interactive) (sp-transpose-sexp -1)))
-(define-key smartparens-mode-map (kbd "C-<right>") 'sp-forward-sexp)
-(define-key smartparens-mode-map (kbd "C-<left>") 'sp-backward-sexp)
-(define-key smartparens-mode-map (kbd "C-<up>") 'sp-forward-parallel-sexp)
-(define-key smartparens-mode-map (kbd "C-<down>") 'sp-backward-parallel-sexp)
-(define-key smartparens-mode-map (kbd "M-<down>") 'sp-up-sexp)
-(define-key smartparens-mode-map (kbd "M-<up>") 'sp-backward-up-sexp)
-(define-key smartparens-mode-map (kbd "M-<left>") 'sp-backward-symbol)
-(define-key smartparens-mode-map (kbd "M-<right>") 'sp-forward-symbol)
-(define-key smartparens-mode-map (kbd "C-S-a") 'sp-beginning-of-sexp)
-(define-key smartparens-mode-map (kbd "C-S-e") 'sp-end-of-sexp)
+(define-key smartparens-mode-map (kbd "C-M-S-t") (lambda () (interactive) (sp-transpose-sexp -1)))
+(define-key smartparens-mode-map (kbd "M-<right>") 'sp-up-sexp)
+(define-key smartparens-mode-map (kbd "M-<left>") 'sp-backward-down-sexp)
+(define-key smartparens-mode-map (kbd "C-<left>") 'sp-backward-up-sexp)
+(define-key smartparens-mode-map (kbd "C-<right>") 'sp-down-sexp)
+(define-key smartparens-mode-map (kbd "C-<down>") 'sp-forward-sexp)
+(define-key smartparens-mode-map (kbd "C-<up>") 'sp-backward-sexp)
+(define-key smartparens-mode-map (kbd "M-<up>") 'sp-backward-parallel-sexp)
+(define-key smartparens-mode-map (kbd "M-<down>") 'sp-forward-parallel-sexp)
+(define-key smartparens-mode-map (kbd "S-<left>") 'sp-backward-symbol)
+(define-key smartparens-mode-map (kbd "S-<right>") 'sp-forward-symbol)
+(define-key smartparens-mode-map (kbd "C-<home>") 'sp-beginning-of-sexp)
+(define-key smartparens-mode-map (kbd "C-<end>") 'sp-end-of-sexp)
+(define-key smartparens-mode-map (kbd "<prior>") 'sp-beginning-of-previous-sexp)
+(define-key smartparens-mode-map (kbd "<next>") 'sp-beginning-of-next-sexp)
+(define-key smartparens-mode-map (kbd "S-<prior>") 'sp-end-of-previous-sexp)
+(define-key smartparens-mode-map (kbd "S-<next>") 'sp-end-of-next-sexp)
+
 (define-key smartparens-mode-map (kbd "C-M-c") 'sp-copy-sexp)
 (define-key smartparens-mode-map (kbd "C-M-k") 'sp-kill-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<up>") 'sp-raise-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<down>") 'sp-unwrap-sexp)
 (define-key smartparens-mode-map (kbd "C-M-s") 'sp-split-sexp)
 (define-key smartparens-mode-map (kbd "C-M-j") 'sp-join-sexp)
-(define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-delete-word)
-(define-key smartparens-mode-map (kbd "M-<delete>") 'sp-delete-word)
+(define-key smartparens-mode-map (kbd "C-<backspace>") 'sp-backward-delete-word)
+(define-key smartparens-mode-map (kbd "C-<delete>") 'sp-delete-word)
 (define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
 (define-key smartparens-mode-map (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
 (define-key smartparens-mode-map (kbd "C-<tab>") 'sp-indent-defun)
@@ -278,13 +294,25 @@
 (global-set-key (kbd "s-g <down>") 'git-gutter:next-hunk)
 (global-set-key (kbd "s-g l") 'git-link)
 
+(setq git-link-default-branch "master")
+
+(defun git-link-current-branch ()
+  (interactive)
+  (setq my-default-branch 'git-link-default-branch)
+  (setq git-link-default-branch (git-link--current-branch))
+  (git-link)
+  (setq git-link-default-branch 'my-default-branch))
+
+(global-set-key (kbd "s-g S-l") 'git-link-current-branch)
 
 (use-package which-key
   :ensure t
+  :custom
+  (which-key-sort-order 'which-key-key-order-alpha)
+  (which-key-idle-delay 0.4)
+  (which-key-max-description-length 50)
   :config
   (which-key-mode +1))
-(setq which-key-idle-delay 0.4)
-(setq which-key-max-description-length 50)
 
 
 (use-package projectile
@@ -304,6 +332,7 @@
 (global-set-key (kbd "M-i") #'helm-imenu-anywhere)
 (global-set-key (kbd "M-x") 'helm-M-x)
 (global-set-key (kbd "M-s-v") 'helm-show-kill-ring)
+(global-set-key (kbd "s-a") 'helm-apropos)
 
 (with-eval-after-load 'treemacs
   (define-key treemacs-mode-map [mouse-1] #'treemacs-single-click-expand-action))
@@ -318,8 +347,8 @@
   (centaur-tabs-show-new-tab-button nil)
   (centaur-tabs-set-close-button nil)
   :bind
-  ("C-<prior>" . centaur-tabs-backward)
-  ("C-<next>" . centaur-tabs-forward))
+  ("M-s-<left>" . centaur-tabs-backward)
+  ("M-s-<right>" . centaur-tabs-forward))
 
 
 (use-package super-save
@@ -375,7 +404,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(lsp-ui-peek-selection ((t (:inherit match)))))
 
 (use-package blamer
   :ensure t
@@ -398,6 +427,12 @@
   ;:config
   ;(global-blamer-mode 1)
   )
-
+(dolist (mode '(cider-popup-buffer-mode
+                  cider-inspector-mode
+                  cider-stacktrace-mode
+                  flycheck-error-list-mode
+                  help-mode
+                  xref--xref-buffer-mode))
+    (evil-set-initial-state mode 'emacs))
 ;; Sources
 ; https://blog.sumtypeofway.com/posts/emacs-config.html
