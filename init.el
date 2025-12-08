@@ -115,7 +115,9 @@
 (keymap-global-set "M-S-<tab>" (lambda ()
                                  (interactive)
                                  (other-window -1)))
-(keymap-global-set "s-w" 'kill-buffer)
+(keymap-global-set "s-w" (lambda ()
+                           (interactive)
+                           (kill-buffer nil)))
 (keymap-global-set "s-q" 'delete-window)
 (keymap-global-set "<f3>" 'treemacs)
 (keymap-global-set "<f4>" 'display-line-numbers-mode)
@@ -206,8 +208,12 @@
  '(cider-use-overlays t)
  '(git-gutter:ask-p nil)
  '(helm-M-x-reverse-history nil)
+ '(history-delete-duplicates t)
+ '(lsp-ui-doc-show-with-mouse nil)
  '(lsp-ui-peek-list-width 80)
- '(lsp-ui-peek-peek-height 120))
+ '(lsp-ui-peek-peek-height 120)
+ '(lsp-ui-peek-show-directory nil)
+ '(lsp-ui-sideline-show-hover nil))
 
 
 (setq cider-known-endpoints
@@ -404,7 +410,8 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(lsp-ui-peek-selection ((t (:inherit match)))))
+ '(lsp-ui-peek-selection ((t (:inherit match))))
+ '(match ((t (:background "purple3" :foreground "gray100")))))
 
 (use-package blamer
   :ensure t
