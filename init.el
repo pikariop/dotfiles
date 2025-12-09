@@ -31,6 +31,7 @@
  ;   highlight-parentheses
     hydra
     kaocha-runner
+    logview
     lsp-mode
     lsp-treemacs
     lsp-ui
@@ -43,6 +44,7 @@
     smartparens
     evil-smartparens
     smooth-scrolling
+    transient
     treemacs
     treemacs-evil
     treemacs-projectile
@@ -122,12 +124,23 @@
 (keymap-global-set "<f3>" 'treemacs)
 (keymap-global-set "<f4>" 'display-line-numbers-mode)
 (keymap-global-set "<f5>" 'visual-line-mode)
+(keymap-global-set "<escape>" 'keyboard-escape-quit)
 
 (setq mouse-drag-copy-region nil)
 
 (winner-mode 1)
 
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+
+(use-package recentf
+  :hook (after-init . recentf-mode)
+  :custom
+  (recentf-max-menu-items 25)
+  ;:config
+ ; (dolist (itm '("^/ssh:" "^/sudo:" "~/.emacs.d/.cache/.*" "recentf$"))
+ ;          (add-to-list 'recentf-exclude itm))
+  )
+
 
 ;(use-package dashboard
 ;  :ensure t
@@ -146,7 +159,6 @@
 (setq undo-outer-limit 1006632960) ; 960mb.
 
 
-(setq evil-toggle-key "s-<home>")
 (use-package evil
   :init (setq evil-undo-system 'undo-fu)
   :hook (prog-mode clojure-mode clojurescript-mode emacs-lisp-mode)
@@ -156,9 +168,19 @@
         evil-normal-state-cursor '(box "medium sea green")
         evil-visual-state-cursor '(hollow "orange")
         evil-emacs-state-cursor '(box "white")
-        evil-cross-lines t)
-
+        evil-cross-lines t
+        evil-toggle-key "s-<home>")
   (evil-add-command-properties #'lsp-find-definition :jump t))
+
+(with-eval-after-load 'evil
+  (dolist (mode '(cider-popup-buffer-mode
+                  cider-inspector-mode
+                  cider-stacktrace-mode
+                  lsp-browser-mode
+                  flycheck-error-list-mode
+                  help-mode
+                  xref--xref-buffer-mode))
+    (evil-set-initial-state mode 'emacs)))
 
 ;(dolist (mode '(emacs-lisp-mode))
 ;  (evil-set-initial-state mode 'evil))
@@ -200,8 +222,10 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(cider-debug-use-overlays nil)
  '(cider-interactive-eval-output-destination 'repl-buffer)
  '(cider-lein-parameters "with-profile +dev repl :headless")
+ '(cider-log-use-logview t)
  '(cider-repl-print-length 1000000)
  '(cider-stacktrace-default-filters '(java tooling dup))
  '(cider-stacktrace-fill-column nil)
@@ -327,9 +351,7 @@
   (setq projectile-project-search-path '("~/src"))
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
-  
   (setq projectile-completion-system 'helm)
-  (global-set-key (kbd "C-c p") 'projectile-command-map)
   (projectile-mode +1))
 
 (setq helm-move-to-line-cycle-in-source nil)
@@ -348,13 +370,20 @@
   :demand
   :config
   (centaur-tabs-mode t)
+  ;(remove-hook 'kill-buffer-hook 'centaur-tabs-buffer-track-killed)
   :custom
   (centaur-tabs-set-icons nil)
   (centaur-tabs-show-new-tab-button nil)
   (centaur-tabs-set-close-button nil)
+  (centaur-tabs-show-count t)
   :bind
   ("M-s-<left>" . centaur-tabs-backward)
-  ("M-s-<right>" . centaur-tabs-forward))
+  ("M-s-<right>" . centaur-tabs-forward)
+  ("C-M-s-<left>" . centaur-tabs-move-current-tab-to-left)
+  ("C-M-s-<right>" . centaur-tabs-move-current-tab-to-right)
+  (:map evil-normal-state-map
+        ("g t" . centaur-tabs-forward)
+        ("g T" . centaur-tabs-backward)))
 
 
 (use-package super-save
@@ -365,6 +394,7 @@
 
 
 (add-hook 'markdown-mode-hook 'pandoc-mode)
+(add-hook 'markdown-mode-hook #'display-line-numbers-mode)
 (add-hook 'pandoc-mode-hook 'pandoc-load-default-settings)
 
 
@@ -405,6 +435,7 @@
   (prog-mode . ws-butler-mode)
   (emacs-lisp-mode . ws-butler-mode))
 
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -434,12 +465,19 @@
   ;:config
   ;(global-blamer-mode 1)
   )
-(dolist (mode '(cider-popup-buffer-mode
-                  cider-inspector-mode
-                  cider-stacktrace-mode
-                  flycheck-error-list-mode
-                  help-mode
-                  xref--xref-buffer-mode))
-    (evil-set-initial-state mode 'emacs))
 ;; Sources
 ; https://blog.sumtypeofway.com/posts/emacs-config.html
+
+
+(defun my-dwim-with-thing-at-mouse (Click)
+  (interactive "e")
+  (let ((xp (posn-point (event-start Click))))
+    (goto-char xp)
+;(browse url)
+    ; (go to definition)
+    ))
+
+(use-package magit
+  :ensure t
+  :bind (:map magit-status-mode-map
+              ("<return>" . magit-diff-visit-file-other-window) ))
