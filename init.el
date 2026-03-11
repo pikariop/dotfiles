@@ -19,6 +19,7 @@
     dracula-theme
     diminish
     evil
+    exec-path-from-shell
     flycheck
     flycheck-clj-kondo
     git-gutter
@@ -31,6 +32,8 @@
  ;   highlight-parentheses
     hydra
     kaocha-runner
+    kibit-helper
+    keycast
     logview
     lsp-mode
     lsp-treemacs
@@ -107,6 +110,7 @@
 (when (fboundp 'menu-bar-mode) (menu-bar-mode -1))
 (when (fboundp 'tool-bar-mode) (tool-bar-mode -1))
 (when (fboundp 'scroll-bar-mode) (scroll-bar-mode -1))
+(add-to-list 'default-frame-alist '((undecorated . nil)))
 
 (unless (display-graphic-p)
   (xterm-mouse-mode 1)
@@ -131,6 +135,9 @@
 (winner-mode 1)
 
 (add-hook 'emacs-lisp-mode-hook 'rainbow-delimiters-mode)
+
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
 
 (use-package recentf
   :hook (after-init . recentf-mode)
@@ -176,6 +183,7 @@
   (dolist (mode '(cider-popup-buffer-mode
                   cider-inspector-mode
                   cider-stacktrace-mode
+                  cider-repl-history-mode
                   lsp-browser-mode
                   flycheck-error-list-mode
                   help-mode
@@ -198,6 +206,12 @@
 ;(global-unset-key (kbd "s-l"))
 ;(setq lsp-keymap-prefix "s-l")
 ;(setq lsp-keymap-prefix "H-l")
+
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-tooltip-flip-when-above t)
+(setq company-tooltip-align-annotations t)
+(setq company-tooltip-annotation-padding 1)
+(setq company-tooltip-flip-when-above t)
 
 ;; https://emacs-lsp.github.io/lsp-mode/tutorials/clojure-guide/
 (setq gc-cons-threshold (* 100 1024 1024)
@@ -226,10 +240,13 @@
  '(cider-interactive-eval-output-destination 'repl-buffer)
  '(cider-lein-parameters "with-profile +dev repl :headless")
  '(cider-log-use-logview t)
+ '(cider-print-fn 'fipp)
+ '(cider-repl-history-file ".cider-repl-history")
  '(cider-repl-print-length 1000000)
  '(cider-stacktrace-default-filters '(java tooling dup))
  '(cider-stacktrace-fill-column nil)
  '(cider-use-overlays t)
+ '(desktop-modes-not-to-save '(tags-table-mode cider-mode))
  '(git-gutter:ask-p nil)
  '(helm-M-x-reverse-history nil)
  '(history-delete-duplicates t)
@@ -258,6 +275,8 @@
             (define-key cider-repl-mode-map (kbd "C-:") 'clojure-toggle-keyword-string)
             (define-key cider-repl-mode-map (kbd "<S-return>") 'cider-repl-newline-and-indent)))
 
+(use-package kibit-helper
+  :ensure t)
 
 (use-package smartparens
   :ensure smartparens  ;; install the package
@@ -300,15 +319,20 @@
 (define-key smartparens-mode-map (kbd "C-M-<down>") 'sp-unwrap-sexp)
 (define-key smartparens-mode-map (kbd "C-M-s") 'sp-split-sexp)
 (define-key smartparens-mode-map (kbd "C-M-j") 'sp-join-sexp)
-(define-key smartparens-mode-map (kbd "C-<backspace>") 'sp-backward-delete-word)
-(define-key smartparens-mode-map (kbd "C-<delete>") 'sp-delete-word)
+(define-key smartparens-mode-map (kbd "M-<backspace>") 'sp-backward-delete-word)
+(define-key smartparens-mode-map (kbd "M-<delete>") 'sp-delete-word)
+(define-key smartparens-mode-map (kbd "C-<backspace>") 'sp-backward-kill-sexp)
+(define-key smartparens-mode-map (kbd "C-<delete>") 'sp-kill-sexp)
 (define-key smartparens-mode-map (kbd "C-M-<backspace>") 'sp-splice-sexp-killing-backward)
 (define-key smartparens-mode-map (kbd "C-M-<delete>") 'sp-splice-sexp-killing-forward)
 (define-key smartparens-mode-map (kbd "C-<tab>") 'sp-indent-defun)
 
 
 (use-package git-gutter
-  :hook (prog-mode . git-gutter-mode)
+  :hook
+  (prog-mode . git-gutter-mode)
+  (yaml-mode . git-gutter-mode)
+  (markdown-mode . git-gutter-mode)
   :config
   (setq git-gutter:update-interval 0.02))
 (use-package git-gutter-fringe
@@ -351,6 +375,7 @@
   (setq projectile-project-search-path '("~/src"))
   :config
   (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+  (keymap-unset 'projectile-command-map "ESC" t)
   (setq projectile-completion-system 'helm)
   (projectile-mode +1))
 
@@ -411,15 +436,26 @@
 (diminish 'projectile-mode)
 (diminish 'git-gutter-mode)
 (diminish 'command-log-mode)
-;(diminish 'projectile-mode)
 (diminish 'company-mode)
-;(diminish 'global-whitespace-mode)
 (diminish 'eldoc-mode)
 (diminish 'super-save-mode)
 (diminish 'which-key-mode)
 (diminish 'command-log-mode)
 (diminish 'evil-smartparens-mode)
 (diminish 'lsp-lens-mode)
+(diminish 'vc-mode)
+(diminish 'auto-revert-mode)
+(diminish 'lsp-mode)
+(diminish 'ws-butler-mode)
+(diminish 'clojure-mode)
+(diminish 'flycheck-mode)
+(diminish 'evil-mode)
+(setq lsp-modeline-diagnostics-mode nil)
+(setq lsp-modeline-code-actions-mode nil)
+(setq lsp-modeline-workspace-status-mode nil)
+(setq-default mode-line-format (delete '(vc-mode vc-mode) mode-line-format))
+;(setq-default mode-line-format (delete 'mode-line-buffer-identification mode-line-format))
+;(setq-default (delete 'mode-line-modified mode-line-format))
 
 ;(use-package highlight-parentheses
 ;  :ensure t
@@ -481,3 +517,13 @@
   :ensure t
   :bind (:map magit-status-mode-map
               ("<return>" . magit-diff-visit-file-other-window) ))
+
+(use-package kaocha-runner
+  :after (cider-mode)
+  :bind (:map clojure-mode-map
+              ("s-k t" . kaocha-runner-run-test-at-point)
+              ("s-k r" . kaocha-runner-run-tests)
+              ("s-k a" . kaocha-runner-run-all-tests)
+              ("s-k w" . kaocha-runner-show-warnings)
+              ("s-k h" . kaocha-runner-hide-windows)))
+
